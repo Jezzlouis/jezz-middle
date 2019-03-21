@@ -33,7 +33,7 @@ public class OrderController {
 
     @RequestMapping("/query")
     public List<Order> queryAll(){
-        List<Order> orders = (List<Order>) orderMapper.findAll();
+        List<Order> orders = orderMapper.findAll();
         return orders;
     }
 }

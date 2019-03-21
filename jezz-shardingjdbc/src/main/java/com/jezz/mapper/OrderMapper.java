@@ -4,6 +4,8 @@ package com.jezz.mapper;
 import com.jezz.entity.Order;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface OrderMapper {
 	/**
@@ -15,5 +17,5 @@ public interface OrderMapper {
 	 * 查询
 	 * @return
 	 */
-	Order findAll();
+	List<Order> findAll();
 }

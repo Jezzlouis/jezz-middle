@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jezz.mapper.OrderMapper">
+    <resultMap id="baseMap" type="com.jezz.entity.Order">
+        <result column="order_id" property="orderId" jdbcType="BIGINT"></result>
+        <result column="user_id" property="userId" jdbcType="BIGINT"></result>
+    </resultMap>
     <insert id="save" parameterType="com.jezz.entity.Order">
         INSERT INTO t_order(order_id,user_id)
         VALUES
@@ -10,7 +14,7 @@
         )
     </insert>
     
-    <select id="findAll" resultType="com.jezz.entity.Order">
+    <select id="findAll" resultMap="baseMap">
     	select * from t_order
     </select>
 </mapper>
