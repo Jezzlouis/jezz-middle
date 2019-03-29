@@ -9,6 +9,9 @@ public class MainTest {
         System.out.println(5/2);
         System.out.println(3%4);
         System.out.println(7%4);
+
+        String a = "123\\12\\a";
+        System.out.println(a.substring(0,a.lastIndexOf("\\")));
     }
     @Test
     public void test2(){
