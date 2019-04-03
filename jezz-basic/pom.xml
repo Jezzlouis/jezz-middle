@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.jezz</groupId>
-    <artifactId>collection</artifactId>
+    <artifactId>jezz-basic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>collection</name>
     <description>Demo project for Spring Boot</description>

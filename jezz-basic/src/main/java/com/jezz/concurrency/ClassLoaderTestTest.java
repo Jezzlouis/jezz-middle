@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.concurrent.*;
 
-public class MainTest {
+public class ClassLoaderTestTest {
     static CountDownLatch downLatch = new CountDownLatch(2);
     static CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
 
