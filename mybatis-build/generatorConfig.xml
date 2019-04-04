@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <properties url="file:/Users/jezzlouis/jezz-middle/mybatis-build/mbg.properties"/>
+    <classPathEntry location="${mbg.jar.path}"/>
+    <context id="context1" defaultModelType="flat">
+
+        <plugin type="com.jezz.plugin.PaginationPlugin"/>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/seconds_kill?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;nullNamePatternMatchesAll=true"
+                        userId="root"
+                        password="123456"/>
+
+        <javaModelGenerator targetPackage="com.jezz.pojo"
+                            targetProject="${target.project.sdk.base}/src/main/java">
+            <property name="mergeable" value="false"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="${target.project.sdk.base}/src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.jezz.mapper"
+                             targetProject="${target.project.sdk.base}/src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table schema="seconds_kill" tableName="stock"
+               domainObjectName="Stock"></table>
+
+    </context>
+</generatorConfiguration>
