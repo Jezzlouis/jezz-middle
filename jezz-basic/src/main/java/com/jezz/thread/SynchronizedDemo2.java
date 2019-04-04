@@ -1,4 +1,4 @@
-package com.jezz.concurrent;
+package com.jezz.thread;
 
 public class SynchronizedDemo2 {
     public synchronized void method() {
