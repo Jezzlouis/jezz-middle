@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jezz.mapper.StockMapper" >
-  <resultMap id="BaseResultMap" type="com.jezz.pojo.Stock" >
+<mapper namespace="com.jezz.mapper.TbOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.jezz.pojo.TbOrder" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="count" property="count" jdbcType="INTEGER" />
-    <result column="sale" property="sale" jdbcType="INTEGER" />
-    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, count, sale, version
+    id, sid, name, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jezz.pojo.StockExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jezz.pojo.TbOrderExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from stock
+    from tb_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,85 +99,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from stock
+    from tb_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from stock
+    delete from tb_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.jezz.pojo.StockExample" >
-    delete from stock
+  <delete id="deleteByExample" parameterType="com.jezz.pojo.TbOrderExample" >
+    delete from tb_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jezz.pojo.Stock" keyProperty="id" useGeneratedKeys="true" >
-    insert into stock (id, name, count, 
-      sale, version)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, 
-      #{sale,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.jezz.pojo.TbOrder" keyProperty="id" useGeneratedKeys="true" >
+    insert into tb_order (id, sid, name, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.jezz.pojo.Stock" keyProperty="id" useGeneratedKeys="true" >
-    insert into stock
+  <insert id="insertSelective" parameterType="com.jezz.pojo.TbOrder" keyProperty="id" useGeneratedKeys="true" >
+    insert into tb_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
+      <if test="sid != null" >
+        sid,
+      </if>
       <if test="name != null" >
         name,
       </if>
-      <if test="count != null" >
-        count,
-      </if>
-      <if test="sale != null" >
-        sale,
-      </if>
-      <if test="version != null" >
-        version,
+      <if test="createTime != null" >
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="count != null" >
-        #{count,jdbcType=INTEGER},
-      </if>
-      <if test="sale != null" >
-        #{sale,jdbcType=INTEGER},
-      </if>
-      <if test="version != null" >
-        #{version,jdbcType=INTEGER},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.jezz.pojo.StockExample" resultType="java.lang.Integer" >
-    select count(*) from stock
+  <select id="countByExample" parameterType="com.jezz.pojo.TbOrderExample" resultType="java.lang.Integer" >
+    select count(*) from tb_order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update stock
+    update tb_order
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.count != null" >
-        count = #{record.count,jdbcType=INTEGER},
-      </if>
-      <if test="record.sale != null" >
-        sale = #{record.sale,jdbcType=INTEGER},
-      </if>
-      <if test="record.version != null" >
-        version = #{record.version,jdbcType=INTEGER},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -186,40 +176,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update stock
+    update tb_order
     set id = #{record.id,jdbcType=INTEGER},
+      sid = #{record.sid,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      count = #{record.count,jdbcType=INTEGER},
-      sale = #{record.sale,jdbcType=INTEGER},
-      version = #{record.version,jdbcType=INTEGER}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jezz.pojo.Stock" >
-    update stock
+  <update id="updateByPrimaryKeySelective" parameterType="com.jezz.pojo.TbOrder" >
+    update tb_order
     <set >
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="count != null" >
-        count = #{count,jdbcType=INTEGER},
-      </if>
-      <if test="sale != null" >
-        sale = #{sale,jdbcType=INTEGER},
-      </if>
-      <if test="version != null" >
-        version = #{version,jdbcType=INTEGER},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jezz.pojo.Stock" >
-    update stock
-    set name = #{name,jdbcType=VARCHAR},
-      count = #{count,jdbcType=INTEGER},
-      sale = #{sale,jdbcType=INTEGER},
-      version = #{version,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.jezz.pojo.TbOrder" >
+    update tb_order
+    set sid = #{sid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

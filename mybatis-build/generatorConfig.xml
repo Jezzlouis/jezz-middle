@@ -26,8 +26,10 @@
                              targetProject="${target.project.sdk.base}/src/main/java"
                              type="XMLMAPPER"/>
 
-        <table schema="seconds_kill" tableName="stock"
-               domainObjectName="Stock"></table>
+        <table schema="seconds_kill" tableName="tb_order"
+               domainObjectName="TbOrder"></table>
+        <table schema="seconds_kill" tableName="tb_stock"
+               domainObjectName="TbStock"></table>
 
     </context>
 </generatorConfiguration>

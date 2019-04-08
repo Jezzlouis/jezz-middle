@@ -2,7 +2,7 @@ package com.jezz.pojo;
 
 import java.io.Serializable;
 
-public class Stock implements Serializable {
+public class TbStock implements Serializable {
     private Integer id;
 
     //名称
