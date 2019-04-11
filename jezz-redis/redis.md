@@ -3,7 +3,7 @@ redis-cli --cluster check
 
 redis-cli -c -h 172.16.5.12 -p 7001 cluster meet 172.16.5.12 7002
 
-## 本文转载自公众号：乔二爷
+## 本文转载自公众号：[转载](https://mp.weixin.qq.com/s/5MloHIa5zKvYYsVVEWZjQA)
 
 这篇文章，是这位同学对自己阿里一面的总结，大家可以参考一下，同时也感谢乔二爷同学的分享。
 
@@ -20,7 +20,7 @@ redis-cli -c -h 172.16.5.12 -p 7001 cluster meet 172.16.5.12 7002
 
 
 我们使用缓存时，我们的业务系统大概的调用流程如下图：
-![Image text](jezz-images/images/redis-images/1.png)
+![Image text](https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/redis-images/1.png)
 
 
 当我们查询一条数据时，先去查询缓存，如果缓存有就直接返回，如果没有就去查询数据库，然后返回。这种情况下就可能会出现一些现象。
@@ -59,7 +59,7 @@ BloomFilter 类似于一个hbase set 用来判断某个元素（key）是否存�
 这种方案可以加在第一种方案中，在缓存之前在加一层 BloomFilter ，在查询的时候先去 BloomFilter 去查询 key 是否存在，如果不存在就直接返回，存在再走查缓存 -> 查 DB。
 
 流程图如下：
-![Image text](jezz-images/images/redis-images/2.png)
+![Image text](https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/redis-images/2.png)
 
 
 ### 2.4 如何选择
@@ -121,7 +121,7 @@ ehcache本地缓存 + Hystrix限流&降级,避免MySQL被打死
 一旦重启，就能从磁盘上自动加载数据恢复内存中的数据。
 
 防止雪崩方案如下图所示：
-![Image text](jezz-images/images/redis-images/3.png)
+![Image text](https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/redis-images/3.png)
 
 
 ### 5 解决热点数据集中失效问题
