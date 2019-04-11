@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jezz.mapper.OrderMapper">
-    <resultMap id="baseMap" type="com.jezz.entity.Order">
+<mapper namespace="com.jezz.shardingjdbc.mapper.OrderMapper">
+    <resultMap id="baseMap" type="com.jezz.shardingjdbc.entity.Order">
         <result column="order_id" property="orderId" jdbcType="BIGINT"></result>
         <result column="user_id" property="userId" jdbcType="BIGINT"></result>
     </resultMap>
-    <insert id="save" parameterType="com.jezz.entity.Order">
+    <insert id="save" parameterType="com.jezz.shardingjdbc.entity.Order">
         INSERT INTO t_order(order_id,user_id)
         VALUES
         (

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jezz.mapper.TbStockMapper" >
-  <resultMap id="BaseResultMap" type="com.jezz.pojo.TbStock" >
+<mapper namespace="com.jezz.order.consumer.mapper.TbStockMapper" >
+  <resultMap id="BaseResultMap" type="com.jezz.order.consumer.pojo.TbStock" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="count" property="count" jdbcType="INTEGER" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List" >
     id, name, count, sale, version
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jezz.pojo.TbStockExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jezz.order.consumer.pojo.TbStockExample" >
     select
     <if test="distinct" >
       distinct
@@ -107,19 +107,19 @@
     delete from tb_stock
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.jezz.pojo.TbStockExample" >
+  <delete id="deleteByExample" parameterType="com.jezz.order.consumer.pojo.TbStockExample" >
     delete from tb_stock
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jezz.pojo.TbStock" keyProperty="id" useGeneratedKeys="true" >
+  <insert id="insert" parameterType="com.jezz.order.consumer.pojo.TbStock" keyProperty="id" useGeneratedKeys="true" >
     insert into tb_stock (id, name, count, 
       sale, version)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, 
       #{sale,jdbcType=INTEGER}, #{version,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.jezz.pojo.TbStock" keyProperty="id" useGeneratedKeys="true" >
+  <insert id="insertSelective" parameterType="com.jezz.order.consumer.pojo.TbStock" keyProperty="id" useGeneratedKeys="true" >
     insert into tb_stock
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -156,7 +156,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.jezz.pojo.TbStockExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.jezz.order.consumer.pojo.TbStockExample" resultType="java.lang.Integer" >
     select count(*) from tb_stock
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -196,7 +196,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.jezz.pojo.TbStock" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.jezz.order.consumer.pojo.TbStock" >
     update tb_stock
     <set >
       <if test="name != null" >
@@ -214,7 +214,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.jezz.pojo.TbStock" >
+  <update id="updateByPrimaryKey" parameterType="com.jezz.order.consumer.pojo.TbStock" >
     update tb_stock
     set name = #{name,jdbcType=VARCHAR},
       count = #{count,jdbcType=INTEGER},

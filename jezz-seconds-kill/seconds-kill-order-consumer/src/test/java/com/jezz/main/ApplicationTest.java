@@ -1,6 +1,7 @@
 package com.jezz.main;
 
-import com.jezz.service.OrderService;
+import com.jezz.order.consumer.main.Application;
+import com.jezz.order.consumer.service.OrderService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
