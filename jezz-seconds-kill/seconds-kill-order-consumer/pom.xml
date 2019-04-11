@@ -54,8 +54,10 @@
         <dependency>
             <groupId>com.jezz</groupId>
             <artifactId>jezz-common</artifactId>
-            <version>1.0.0.RELEASE</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jezz</groupId>
+            <artifactId>jezz-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
