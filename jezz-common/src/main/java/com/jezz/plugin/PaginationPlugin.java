@@ -59,10 +59,10 @@ public class PaginationPlugin extends PluginAdapter {
     @Override
     public boolean modelExampleClassGenerated(
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        // add field, getter, setter for limit clause
+        // add field, getter, setter for ratelimit clause
         addLimitParam(topLevelClass, introspectedTable, "limitStart");
         addLimitParam(topLevelClass, introspectedTable, "limitEnd");
-        addLimit(topLevelClass, introspectedTable, "limit");
+        addLimit(topLevelClass, introspectedTable, "ratelimit");
         addPage(topLevelClass, introspectedTable, "page");
         return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
     }
@@ -100,7 +100,7 @@ public class PaginationPlugin extends PluginAdapter {
         addLimitXml(element);
         XmlElement page = new XmlElement("if");
         page.addAttribute(new Attribute("test", "page != null"));
-        page.addElement(new TextElement("limit #{page.begin} , #{page.length}"));
+        page.addElement(new TextElement("ratelimit #{page.begin} , #{page.length}"));
         element.addElement(page);
         return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
@@ -111,7 +111,7 @@ public class PaginationPlugin extends PluginAdapter {
         addLimitXml(element);
         XmlElement page = new XmlElement("if");
         page.addAttribute(new Attribute("test", "page != null"));
-        page.addElement(new TextElement("limit #{page.begin} , #{page.length}"));
+        page.addElement(new TextElement("ratelimit #{page.begin} , #{page.length}"));
         element.addElement(page);
         return super.sqlMapUpdateByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
     }
@@ -122,25 +122,25 @@ public class PaginationPlugin extends PluginAdapter {
          * .getElements().get(element.getElements().size() - 1);
          */
         XmlElement if1Element = new XmlElement("if"); //$NON-NLS-1$
-        if1Element.addAttribute(new Attribute("test", "limit == null"));
+        if1Element.addAttribute(new Attribute("test", "ratelimit == null"));
 
         XmlElement sonEleIf = new XmlElement("if"); //$NON-NLS-1$
         sonEleIf.addAttribute(new Attribute("test", "limitStart gt 0 and limitEnd gt 0 "));
         //isNotNullElement.addAttribute(new Attribute("compareValue", "0"));
-        sonEleIf.addElement(new TextElement("limit ${limitStart} , ${limitEnd}"));
+        sonEleIf.addElement(new TextElement("ratelimit ${limitStart} , ${limitEnd}"));
         if1Element.addElement(sonEleIf);
 
         XmlElement sonEleElse = new XmlElement("if"); //$NON-NLS-1$
         sonEleElse.addAttribute(new Attribute("test", "limitStart lt 1 and limitEnd lt 0 "));
         //isNotNullElement.addAttribute(new Attribute("compareValue", "0"));
-        sonEleElse.addElement(new TextElement("limit ${limitEnd}"));
+        sonEleElse.addElement(new TextElement("ratelimit ${limitEnd}"));
         if1Element.addElement(sonEleElse);
         element.addElement(if1Element);
 
         XmlElement elseSon = new XmlElement("if");
-        elseSon.addAttribute(new Attribute("test", " limit != null "));
+        elseSon.addAttribute(new Attribute("test", " ratelimit != null "));
         //isNotNullElement.addAttribute(new Attribute("compareValue", "0"));
-        elseSon.addElement(new TextElement("limit ${limit.start} , ${limit.size}"));
+        elseSon.addElement(new TextElement("ratelimit ${ratelimit.start} , ${ratelimit.size}"));
         element.addElement(elseSon);
     }
 
