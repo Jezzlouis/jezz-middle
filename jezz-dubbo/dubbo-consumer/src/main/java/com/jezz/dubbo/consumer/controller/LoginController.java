@@ -11,11 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    private LoginService userService;
+    private LoginService loginService;
 
     @RequestMapping(value = "sayhello",method = RequestMethod.GET)
     public void sayHello(){
-        userService.sayHello("JEZZ");
+        loginService.sayHello("JEZZ");
+    }
+
+    @RequestMapping(value = "makecar",method = RequestMethod.GET)
+    public void makeCar(){
+        loginService.makeCar("BWM");
     }
 
 }

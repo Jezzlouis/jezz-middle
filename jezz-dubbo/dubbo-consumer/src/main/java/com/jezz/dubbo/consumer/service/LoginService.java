@@ -4,4 +4,5 @@ public interface LoginService {
 
     void sayHello(String name);
 
+    void makeCar(String name);
 }
