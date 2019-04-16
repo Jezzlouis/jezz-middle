@@ -19,4 +19,15 @@ public class MainTest {
         String[] r = a.split(",");
         System.out.println(r[r.length-1]);
     }
+    @Test
+    public void test3() throws Exception {
+        int a = 1;
+        int b = 0;
+        try{
+           int c = a/b;
+        }catch (Exception e){
+            throw new Exception("失败",e);
+        }
+
+    }
 }
