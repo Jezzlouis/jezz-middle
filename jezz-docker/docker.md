@@ -184,7 +184,7 @@
       
    ![Image text](https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/docker/docker_access_2.png)
     
-### docker idea一键部署 : 有 CA 认证  
+### docker idea一键部署 : 有 CA 认证 (未完待续)
   
   
   
@@ -193,7 +193,10 @@
 
 
 ## 参考文献 : 
-   [https://blog.csdn.net/ChineseYoung/article/details/83107353](https://blog.csdn.net/ChineseYoung/article/details/83107353)  
+
+   [https://blog.csdn.net/ChineseYoung/article/details/83107353](https://blog.csdn.net/ChineseYoung/article/details/83107353) 
+    
    [https://blog.csdn.net/lovexiaotaozi/article/details/82797236](https://blog.csdn.net/lovexiaotaozi/article/details/82797236)
+   
    [https://my.oschina.net/wuweixiang/blog/2874064](https://my.oschina.net/wuweixiang/blog/2874064)
   
