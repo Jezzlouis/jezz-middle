@@ -1,4 +1,4 @@
-package com.jezz.netty.server;
+package com.jezz.netty.echo;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

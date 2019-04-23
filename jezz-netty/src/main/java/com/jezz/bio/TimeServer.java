@@ -17,7 +17,7 @@ public class TimeServer {
         ServerSocket  server = null;
         try {
             server = new ServerSocket(port);
-            System.out.println("The time server is start in port : " + port);
+            System.out.println("The time echo is start in port : " + port);
             Socket socket = null;
             while (true){
                 socket = server.accept();
@@ -25,7 +25,7 @@ public class TimeServer {
             }
         } finally {
             if(server != null){
-                System.out.println("The time server close");
+                System.out.println("The time echo close");
                 server.close();
                 server = null;
             }

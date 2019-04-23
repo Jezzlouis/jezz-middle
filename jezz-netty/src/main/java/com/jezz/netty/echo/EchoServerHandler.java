@@ -1,4 +1,4 @@
-package com.jezz.netty.server;
+package com.jezz.netty.echo;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

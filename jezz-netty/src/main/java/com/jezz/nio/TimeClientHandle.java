@@ -126,7 +126,7 @@ public class TimeClientHandle implements Runnable {
         writeBuffer.flip();
         sc.write(writeBuffer);
         if(!writeBuffer.hasRemaining()){
-            System.out.println("Send order 2 server succeed.");
+            System.out.println("Send order 2 echo succeed.");
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.jezz.netty.server;
+package com.jezz.netty.echo;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -30,7 +30,7 @@ public class EchoServer {
                             ch.pipeline().addLast(new EchoServerHandler());
                         }
                     });
-            //Binds server, waits for server to close, and releases resources
+            //Binds echo, waits for echo to close, and releases resources
             ChannelFuture f = b.bind().sync();
             System.out.println(EchoServer.class.getName() + "started and listen on " + f.channel().localAddress());
             f.channel().closeFuture().sync();

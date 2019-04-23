@@ -1,4 +1,4 @@
-package com.jezz.netty.test;
+package com.jezz.netty.time;
 
 import io.netty.channel.ChannelHandlerAdapter;
 

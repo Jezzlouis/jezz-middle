@@ -37,7 +37,17 @@ LINUX提供select/poll,进程通过一个或者多个fd(文件描述符fd)传递
 操作,异步I/O模型由内核通知我们I/O操作何时已经完成
 
 ![Image text](https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/netty/linux_io_5.png)
-    
+
+#### bootstrap 和 serverbootstrap 区别
+1.bootstrap 是客户端引导启动类 , serverbootstrap 是服务端引导启动类
+2.Bootstrap用来连接远程主机，有1个EventLoopGroup ServerBootstrap用来绑定本地端口，有2个EventLoopGroup
+
+#### evengrouploop 和 evenloop
+EventLoopGroup可以包含很多个EventLoop，每个Channel绑定一个EventLoop不会被改变，因为 EventLoopGroup包含少量的EventLoop的Channels，很多Channel会共享同一个EventLoop
+
+Netty中发送消息有两 种方法:直接写入通道或写入ChannelHandlerContext对象。这两种方法的主要区别如下:
+直接写入通道导致处理消息从ChannelPipeline的尾部开始 写入ChannelHandlerContext对象导致处理消息从ChannelPipeline的下一个handler开始
+
 ### 零拷贝
 [零拷贝](https://mp.weixin.qq.com/s/JahuwQnDJwinV3LGCIT6pw)
 

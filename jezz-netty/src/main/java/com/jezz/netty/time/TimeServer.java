@@ -1,4 +1,4 @@
-package com.jezz.netty.test;
+package com.jezz.netty.time;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
