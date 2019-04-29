@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @MyController
-@MyRequestMapping("/test")
+@MyRequestMapping("/time")
 public class TestController {
 
 

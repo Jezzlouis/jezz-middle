@@ -14,7 +14,7 @@ public class SsoServerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SsoServerApplication.class, args);
-        System.out.println("sso-server 启动 ......");
+        System.out.println("sso-echo 启动 ......");
     }
 
 }

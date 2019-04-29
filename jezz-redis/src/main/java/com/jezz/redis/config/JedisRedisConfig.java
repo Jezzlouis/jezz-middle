@@ -47,7 +47,7 @@ public class JedisRedisConfig {
 
 
     /**
-     * springboot1.x使用的jedis进行连接 Jedis在实现上是直接连接的redis server，
+     * springboot1.x使用的jedis进行连接 Jedis在实现上是直接连接的redis echo，
      * 如果在多线程环境下是非线程安全的，这个时候只有使用连接池，为每个Jedis实例增加物理连接
      */
     @Bean

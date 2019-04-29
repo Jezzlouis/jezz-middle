@@ -21,7 +21,7 @@ public class RedisApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RedisApplication.class, args);
-        System.out.println("redis test...");
+        System.out.println("redis time...");
     }
 }
 
