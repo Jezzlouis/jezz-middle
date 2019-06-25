@@ -2,6 +2,11 @@ package com.jezz.maintest;
 
 import org.junit.Test;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainTest {
 
     @Test
@@ -18,6 +23,9 @@ public class MainTest {
         String a = "0";
         String[] r = a.split(",");
         System.out.println(r[r.length-1]);
+
+        StringBuilder sb = new StringBuilder();
+        System.out.println("====" + sb.toString());
     }
     @Test
     public void test3() throws Exception {
@@ -29,5 +37,31 @@ public class MainTest {
             throw new Exception("失败",e);
         }
 
+    }
+
+    @Test
+    public void test4(){
+        long time = 1558428581;
+        String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time * 1000));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = null;
+        try {
+            d = df.parse(format);
+            System.out.println(d.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(System.currentTimeMillis() - d.getTime());
+
+
+        long time1 = 1527767665;
+        String result1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time1 * 1000));
+        System.out.println("10位数的时间戳（秒）--->Date:" + result1);
+        Date date1 = new Date(time1*1000);
+
+
+        Date o = new Date(time*1000);
+        SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
+        System.out.println(sd.format(o));
     }
 }
