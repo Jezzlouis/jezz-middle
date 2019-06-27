@@ -1,10 +1,15 @@
 package com.jezz.concurrent;
 
 import java.util.Vector;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class SuoTest {
 
     public static void main(String[] args) {
+        Lock lock = new ReentrantLock();
+        lock.lock();
         vectorTest();
     }
     public static void vectorTest(){
