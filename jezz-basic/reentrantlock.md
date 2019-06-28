@@ -145,6 +145,21 @@ AQS方法自定义实现释放同步状态tryRelease(int arg)
     
 ## ReentrantReadWriteLock
 
+读写锁的自定义同步器需要在同步状态(一个整形变量)上维护多个线程和一个写线程的状态,所以采用了'按位切割使用'这个方式来维护这个变量，读写锁将变量分成了2个部分，高16位读低16位写
+当前同步状态为S，那么写状态等于 S & 0x0000FFFF（将高16位全部抹去），读状态等于S >>> 16(无符号补0右移16位)
+当写状态增加1时，等于s+1,当读状态增加1时，等于S+（1<<16）也就是S+0x00010000
+推论:S不等于0时，当写状态等于0时，读状态大于0时，读锁被获取
+
+    static final int SHARED_SHIFT   = 16;
+    static final int SHARED_UNIT    = (1 << SHARED_SHIFT);
+    static final int MAX_COUNT      = (1 << SHARED_SHIFT) - 1;
+    static final int EXCLUSIVE_MASK = (1 << SHARED_SHIFT) - 1;
+
+    /** Returns the number of shared holds represented in count  */
+    static int sharedCount(int c)    { return c >>> SHARED_SHIFT; }
+    /** Returns the number of exclusive holds represented in count  */
+    static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
+
 默认使用非公平锁 readLock()返回用于读操作的锁，writeLock()返回用于写操作的锁
 
      public ReentrantReadWriteLock() {
@@ -209,14 +224,23 @@ sharedCount(c) 读锁数量 ，判断读锁是否需要阻塞，读锁持有线�
     protected final int tryAcquireShared(int unused) {
         Thread current = Thread.currentThread();
         int c = getState();
+        // exclusiveCount(c) != 0 --->>> 用 state & 65535 得到低 16 位的值。如果不是0，说明写锁被持有了。
+        // getExclusiveOwnerThread() != current----> 不是当前线程
+        // 如果写锁被霸占了，且持有线程不是当前线程，返回 false，加入队列。获取写锁失败。
+        // 反之，如果持有写锁的是当前线程，就可以继续获取读锁了---->锁降级
         if (exclusiveCount(c) != 0 &&
             getExclusiveOwnerThread() != current)
             return -1;
+        // 如果写锁没有被霸占，则将高16位移到低16位。
         int r = sharedCount(c);
+        // !readerShouldBlock() 和写锁的逻辑一样（根据是否公平策略和队列是否含有等待节点）
+        // 必须小于 65535，且 CAS 修改成功
         if (!readerShouldBlock() &&
             r < MAX_COUNT &&
             compareAndSetState(c, c + SHARED_UNIT)) {
+            // 如果读锁是空闲的， 获取锁成功。
             if (r == 0) {
+                // 将当前线程设置为第一个读锁线程
                 firstReader = current;
                 firstReaderHoldCount = 1;
             } else if (firstReader == current) {
@@ -231,6 +255,7 @@ sharedCount(c) 读锁数量 ，判断读锁是否需要阻塞，读锁持有线�
             }
             return 1;
         }
+        // 死循环获取读锁。包含锁降级策略。
         return fullTryAcquireShared(current);
     }
     
@@ -284,4 +309,80 @@ sharedCount(c) 读锁数量 ，判断读锁是否需要阻塞，读锁持有线�
         }
     }
 
+#### 锁降级
+
+注: 读锁是不可能升级成写锁的
+写锁降级成为读锁,如果当前线程拥有写锁，然后将其释放，最后再获取读锁，这种分段完成的过程不能称之为锁降级
+锁降级是指把持住(当前拥有的)写锁，再获取读锁，随后释放(先前拥有的)写锁的过程
+
+锁降级中读锁的获取是否是必要呢?(《java并发编程的艺术》)
+必要;主要为了保证数据的可见性,如果当前线程不获取读锁而是直接释放写锁,假设有另外一个线程(暂记作线程T)获取了写锁并修改了数据，那么当前线程无法感知线程T的数据更新。
+如果当前线程获取读锁，即遵循锁降级的步骤，则线程T将会被阻塞，直到当前线程使用数据并释放读锁之后，线程T才能获取写锁进行数据更新
+
 #### 释放锁
+    
+    protected final boolean tryReleaseShared(int unused) {
+        Thread current = Thread.currentThread();
+        //如果想要释放锁的线程为第一个获取锁的线程
+        if (firstReader == current) {
+            // assert firstReaderHoldCount > 0;
+            //仅获取了一次，则需要将firstReader 设置null，否则 firstReaderHoldCount - 1
+            if (firstReaderHoldCount == 1)
+                firstReader = null;
+            else
+                firstReaderHoldCount--;
+        } else {
+        //获取rh对象，并更新“当前线程获取锁的信息”
+            HoldCounter rh = cachedHoldCounter;
+            if (rh == null || rh.tid != getThreadId(current))
+                rh = readHolds.get();
+            int count = rh.count;
+            if (count <= 1) {
+                readHolds.remove();
+                if (count <= 0)
+                    throw unmatchedUnlockException();
+            }
+            --rh.count;
+        }
+        //CAS更新同步状态
+        for (;;) {
+            int c = getState();
+            int nextc = c - SHARED_UNIT;
+            if (compareAndSetState(c, nextc))
+                // Releasing the read lock has no effect on readers,
+                // but it may allow waiting writers to proceed if
+                // both read and write locks are now free.
+                return nextc == 0;
+        }
+    }
+    
+#### condition
+
+condition为线程提供了一种更为灵活的等待/通知模式，线程在调用await方法后执行挂起操作，直到线程等待的某个条件为真时才会被唤醒。
+Condition必须要配合锁一起使用，因为对共享状态变量的访问发生在多线程环境下。
+一个Condition的实例必须与一个Lock绑定，因此Condition一般都是作为Lock的内部实现
+
+    public class ConditionObject implements Condition, java.io.Serializable {
+        private static final long serialVersionUID = 1173984872572414699L;
+        /** First node of condition queue. */
+        private transient Node firstWaiter;
+        /** Last node of condition queue. */
+        private transient Node lastWaiter;
+
+        public ConditionObject() { }
+
+        private Node addConditionWaiter() {
+            Node t = lastWaiter;
+            // If lastWaiter is cancelled, clean out.
+            if (t != null && t.waitStatus != Node.CONDITION) {
+                unlinkCancelledWaiters();
+                t = lastWaiter;
+            }
+            Node node = new Node(Thread.currentThread(), Node.CONDITION);
+            if (t == null)
+                firstWaiter = node;
+            else
+                t.nextWaiter = node;
+            lastWaiter = node;
+            return node;
+        }
