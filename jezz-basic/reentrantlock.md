@@ -386,3 +386,46 @@ Condition必须要配合锁一起使用，因为对共享状态变量的访问�
             lastWaiter = node;
             return node;
         }
+        
+##### 等待 await
+    
+    public final void await() throws InterruptedException {
+    // 当前线程中断
+        if (Thread.interrupted())
+            throw new InterruptedException();
+            // 加入到等待队列
+        Node node = addConditionWaiter();
+        // 释放锁
+        int savedState = fullyRelease(node);
+        int interruptMode = 0;
+        // 检测此节点的线程是否在同步队上，如果不在，则说明该线程还不具备竞争锁的资格，则继续等待,直到检测到此节点在同步队列上
+        while (!isOnSyncQueue(node)) {
+        // 线程挂起
+            LockSupport.park(this);
+            // 如果已经中断了 跳出循环
+            if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)
+                break;
+        }
+        // 竞争同步状态
+        if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
+            interruptMode = REINTERRUPT;
+            //清理下条件队列中的不是在等待条件的节点
+        if (node.nextWaiter != null) // clean up if cancelled
+            unlinkCancelledWaiters();
+        if (interruptMode != 0)
+            reportInterruptAfterWait(interruptMode);
+    }
+
+##### 通知 signal()
+
+    public final void signal() {
+        //检测当前线程是否获取了锁
+        if (!isHeldExclusively())
+            throw new IllegalMonitorStateException();
+        //头节点，唤醒条件队列中的第一个节点
+        Node first = firstWaiter;
+        if (first != null)
+            doSignal(first);    //唤醒
+    }
+
+##### Condition实现生产者消费者
