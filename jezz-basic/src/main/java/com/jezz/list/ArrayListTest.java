@@ -1,5 +1,6 @@
 package com.jezz.list;
 
+import com.sun.security.auth.UserPrincipal;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -45,5 +46,11 @@ public class ArrayListTest {
         }
         long endTime1 = System.currentTimeMillis();
         System.out.println("使用ensureCapacity方法后："+(endTime1 - startTime1));
+    }
+
+    @Test
+    public void test4(){
+        System.out.println(System.currentTimeMillis());
+
     }
 }
