@@ -3,9 +3,7 @@ package com.jezz.list;
 import com.sun.security.auth.UserPrincipal;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ArrayListTest {
     @Test
@@ -14,6 +12,7 @@ public class ArrayListTest {
         for (int i = 0; i < 11; i++) {
          list.add(i);
         }
+        list.add(11,7);
     }
     @Test
     public void test2(){
@@ -53,4 +52,107 @@ public class ArrayListTest {
         System.out.println(System.currentTimeMillis());
 
     }
+
+    @Test
+    public void testBig(){
+        List<String> smallList = new ArrayList<>();
+        List<String> bigList = new ArrayList<>();
+
+        for (int i = 0; i < 400000; i++) {
+            if (i < 80000) {
+                smallList.add(String.valueOf(i));
+                bigList.add(String.valueOf(i));
+            } else {
+                bigList.add(String.valueOf(i));
+            }
+        }
+        System.out.println("a1：" + smallList.size());
+        System.out.println("a2：" + bigList.size());
+
+        long start = System.currentTimeMillis();
+        // arr2.removeAll(arr1);
+        smallList.removeAll(bigList);
+        // Set set = removeAll(bigList, samllList);
+        long end = System.currentTimeMillis();
+
+        // System.out.println("set：" + set.size());
+
+        System.out.println(bigList.size());
+        System.out.println("spend time：" + (end - start));
+    }
+
+    private static Set removeAll(List bigList, List smallList) {
+        Set set = new HashSet(bigList);
+        set.removeAll(smallList);
+        return set;
+    }
+
+    public static List removeAll2(List src,List oth){
+        LinkedList result = new LinkedList(src);//大集合用linkedlist
+        HashSet othHash = new HashSet(oth);//小集合用hashset
+        Iterator iter = result.iterator();//采用Iterator迭代器进行数据的操作
+        while(iter.hasNext()){
+            if(othHash.contains(iter.next())){
+                iter.remove();
+            }
+        }
+        return result;
+    }
+
+    @Test
+    public void testBig3(){
+        List<String> smallList = new ArrayList<>();
+        List<String> bigList = new ArrayList<>();
+
+        for (int i = 0; i < 400000; i++) {
+            if (i < 80000) {
+                smallList.add(String.valueOf(i));
+                bigList.add(String.valueOf(i));
+            } else {
+                bigList.add(String.valueOf(i));
+            }
+        }
+        System.out.println("a1：" + smallList.size());
+        System.out.println("a2：" + bigList.size());
+
+        long start = System.currentTimeMillis();
+        // arr2.removeAll(arr1);
+        removeAll(bigList,smallList);
+        // Set set = removeAll(bigList, samllList);
+        long end = System.currentTimeMillis();
+
+        // System.out.println("set：" + set.size());
+
+        System.out.println(bigList.size());
+        System.out.println("spend time：" + (end - start));
+    }
+
+    @Test
+    public void testBig4(){
+        List<String> smallList = new ArrayList<>();
+        List<String> bigList = new ArrayList<>();
+
+        for (int i = 0; i < 400000; i++) {
+            if (i < 80000) {
+                smallList.add(String.valueOf(i));
+                bigList.add(String.valueOf(i));
+            } else {
+                bigList.add(String.valueOf(i));
+            }
+        }
+        System.out.println("a1：" + smallList.size());
+        System.out.println("a2：" + bigList.size());
+
+        long start = System.currentTimeMillis();
+        // arr2.removeAll(arr1);
+        removeAll2(bigList,smallList);
+        // Set set = removeAll(bigList, samllList);
+        long end = System.currentTimeMillis();
+
+        // System.out.println("set：" + set.size());
+
+        System.out.println(bigList.size());
+        System.out.println("spend time：" + (end - start));
+    }
+
 }

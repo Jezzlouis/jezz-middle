@@ -355,3 +355,5 @@
 （4）创建一个新容量的桶；
 
 （5）搬移元素，原链表分化成两个链表，低位链表存储在原来桶的位置，高位链表搬移到原来桶的位置加旧容量的位置；
+
+![Image text]( https://github.com/Jezzlouis/jezz-middle/blob/master/jezz-images/images/collection/hashmapput.png )
