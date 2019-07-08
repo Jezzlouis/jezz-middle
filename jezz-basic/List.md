@@ -65,28 +65,56 @@ ArrayList是怎么实现序列化和反序列化的？
     
     返回的有可能不是Object[]类型
     
-什么是fail-fast？
+什么是fail-fast?快速失败（fail-fast）和安全失败（fail-safe）的区别是什么
+
+    快速失败：当你在迭代一个集合的时候，如果有另一个线程正在修改你正在访问的那个集合时，就会抛出一个 ConcurrentModification 异常。
+     在 java.util 包下的都是快速失败。
+    安全失败：你在迭代的时候会去底层集合做一个拷贝，所以你在修改上层集合的时候是不会受影响的，不会抛出 ConcurrentModification 异常。
+    在 java.util.concurrent 包下的全是安全失败的
     
 LinkedList是单链表还是双链表实现的？
+
+    双链表
     
 LinkedList除了作为List还有什么用处？
     
+    队列和栈
+    
 LinkedList插入、删除、查询元素的时间复杂度各是多少？
+    
+    插入，删除 O(1) 查询 O(n)
     
 什么是随机访问？
     
+    随机访问一般是通过index下标访问，行为类似数组的访问。而顺序访问类似于链表的访问，通常为迭代器遍历
+    
 哪些集合支持随机访问？他们都有哪些共性？
+    
+    LinkedList不支持随机访问，所以访问非队列首尾的元素比较低效；
     
 CopyOnWriteArrayList是怎么保证并发安全的？
     
+    使用ReentrantLock重入锁加锁，保证线程安全
+    
 CopyOnWriteArrayList的实现采用了什么思想？
+    
+    CopyOnWriteArrayList采用读写分离的思想，读操作不加锁，写操作加锁，且写操作占用较大内存空间，所以适用于读多写少的场合；
     
 CopyOnWriteArrayList是不是强一致性的？
     
+    CopyOnWriteArrayList只保证最终一致性，不保证实时一致性
+    
 CopyOnWriteArrayList适用于什么样的场景？
+    
+    读多写少
     
 CopyOnWriteArrayList插入、删除、查询元素的时间复杂度各是多少？
     
+    CopyOnWriteArrayList的写操作都要先拷贝一份新数组，在新数组中做修改，修改完了再用新数组替换老数组，所以空间复杂度是O(n)，性能比较低下
+    CopyOnWriteArrayList的读操作支持随机访问，时间复杂度为O(1)
+    
 CopyOnWriteArrayList为什么没有size属性？
+    
+    因为每次修改都是拷贝一份正好可以存储目标个数元素的数组，所以不需要size属性了，数组的长度就是集合的大小，而不像ArrayList数组的长度实际是要大于集合的大小的
     
 比较古老的集合Vector和Stack有什么缺陷？
