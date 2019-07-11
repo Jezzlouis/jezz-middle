@@ -5,11 +5,9 @@
 github上面clone 下来 https://github.com/xuxueli/xxl-job
 
 1.首先是application.properties
+主要是端口 还有datasource email 需要配置
 
-   <label style="color:red">
-    server.port=7755 <br>
-   </label>
-   
+    server.port=7755 
     server.context-path=/xxl-job-admin
     
     ### resources
@@ -27,13 +25,10 @@ github上面clone 下来 https://github.com/xuxueli/xxl-job
     mybatis.mapper-locations=classpath:/mybatis-mapper/*Mapper.xml
     
     ### xxl-job, datasource
-           
-   <label style="color:red">
-       spring.datasource.url=jdbc:mysql://localhost:3306/xxl_job?Unicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true <br>
-       spring.datasource.username=root <br>
-       spring.datasource.password=rendering2017_test <br>
-       spring.datasource.driver-class-name=com.mysql.jdbc.Driver<br>
-   </label>
+    spring.datasource.url=jdbc:mysql://localhost:3306/xxl_job?Unicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true 
+    spring.datasource.username=root
+    spring.datasource.password=rendering2017_test 
+    spring.datasource.driver-class-name=com.mysql.jdbc.Driver
     
     spring.datasource.type=org.apache.tomcat.jdbc.pool.DataSource
     spring.datasource.tomcat.max-wait=10000
@@ -43,17 +38,14 @@ github上面clone 下来 https://github.com/xuxueli/xxl-job
     spring.datasource.tomcat.validation-interval=30000
     
     ### xxl-job email
-    
-   <label style="color:red">
-    spring.mail.host=smtpdm.aliyun.com <br>
-    spring.mail.port=465 <br>
-    spring.mail.username=xxxxxxxxx <br>
-    spring.mail.password=xxxxxxxx <br>
-    spring.mail.properties.mail.smtp.auth=true <br>
-    spring.mail.properties.mail.smtp.starttls.enable=true <br>
-    spring.mail.properties.mail.smtp.starttls.required=true <br>
-    spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory <br>
-   </label>
+    spring.mail.host=smtpdm.aliyun.com 
+    spring.mail.port=465 
+    spring.mail.username=xxxxxxxxx 
+    spring.mail.password=xxxxxxxx 
+    spring.mail.properties.mail.smtp.auth=true 
+    spring.mail.properties.mail.smtp.starttls.enable=true 
+    spring.mail.properties.mail.smtp.starttls.required=true 
+    spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory 
    
     ### xxl-job, access token
     xxl.job.accessToken=
@@ -68,9 +60,7 @@ github上面clone 下来 https://github.com/xuxueli/xxl-job
     
         <contextName>logback</contextName>
         // 很重要 这里配错就会报错无法启动,报的就是日志有问题
-   <label style="color:red">
         <property name="log.path" value="/opt/xxl-job/xxl-job-admin.log"/>
-   </label>
     
         <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -118,7 +108,7 @@ github上面clone 下来 https://github.com/xuxueli/xxl-job
     
     java的话不需要选择GLUE模式，全都选bean模式 使用示例 DemoJobHandler    
     
-4. 配置网站的Handler 注意和代码的JobHandler保持一致
+4. 配置网站的Handler 注意和代码的JobHandler的名字保持一致
 
 5. 配置日志 logback.xml不用变
 
