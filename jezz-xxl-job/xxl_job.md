@@ -110,9 +110,11 @@ github上面clone 下来 https://github.com/xuxueli/xxl-job
     
 4. 配置网站的Handler 注意和代码的JobHandler的名字保持一致
 
-5. 配置日志 logback.xml不用变
+5. 配置日志 logback.xml不用变 
 
 6. 配置 application.properties
+
+日志保留天数最少保留4天，否则永久保留
 
 注意是application.properties 里面的值   xxl.job.executor.logpath = xxx 这个路径一定要能找到并且有权限访问,否则报错file找不到
 
