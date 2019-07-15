@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 public class MainTest {
 
@@ -63,5 +63,29 @@ public class MainTest {
         Date o = new Date(time*1000);
         SimpleDateFormat sd = new SimpleDateFormat("yyyyMMddHHmmss");
         System.out.println(sd.format(o));
+    }
+
+    @Test
+    public void test5(){
+       int a =  new Random().nextInt(100);
+        System.out.println(1%3);
+        System.out.println(2%3);
+        System.out.println(3%3);
+        System.out.println(4%3);
+        System.out.println(5%3);
+        System.out.println(6%3);
+        System.out.println(a);
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        System.out.println(list.size() + "----");
+
+        Collections.sort(list, (o1, o2) -> o2.compareTo(o1));
+
+        for (Integer integer : list) {
+            System.out.println(integer);
+        }
     }
 }
