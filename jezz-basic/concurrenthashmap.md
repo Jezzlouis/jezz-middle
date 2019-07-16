@@ -1,5 +1,10 @@
 ## ConcurrentHashMap
 
+为什么不使用hashMap: 
+
+1.7 put会导致死循环: rehash的时候 将每个链表转化到新链表，并且链表中的位置发生反转，而这在多线程情况下是很容易造成链表回路，从而发生 get() 死循环
+1.8 进行了优化 用 head 和 tail 来保证链表的顺序和之前一样 但是还有数据丢失等弊端(并发本身的问题)
+
 ### 内部类 Node
 
     static class Node<K,V> implements Map.Entry<K,V> {
