@@ -7,5 +7,6 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
         concurrentHashMap.put("1","2");
         System.out.println(0x7fffffff);
+        System.out.println(Integer.numberOfLeadingZeros(1));
     }
 }
