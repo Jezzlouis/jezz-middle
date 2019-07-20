@@ -26,6 +26,8 @@
     http.cors.enabled: true
     http.cors.allow-origin: "*"
  
+## 集群版
+ 
 创建es的挂载目录以及配置文件:
     
     cd  /opt/software
@@ -145,3 +147,75 @@ node03.yml
     docker pull kibana:7.2.0
     
     docker run --link es-node0:elasticsearch -p 5601:5601 --name kibana -d kibana:7.2.0
+
+## Linux yum 安装
+
+安装jdk
+yum install java-1.8.0-openjdk* -y
+
+1.下载并安装GPG key
+
+    rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+2.添加yum仓库
+    
+    cd /etc/yum.repos.d
+    
+    touch  elasticsearch.repo
+    
+vim elasticsearch.repo
+    
+    [elasticsearch-7.x]
+    name=Elasticsearch repository for 7.x packages
+    baseurl=https://artifacts.elastic.co/packages/7.x/yum
+    gpgcheck=1
+    gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    enabled=1
+    autorefresh=1
+    type=rpm-md
+ 
+安装elasticsearch
+    
+    sudo yum install elasticsearch
+    
+配置elasticsearch
+    
+    vim /etc/elasticsearch/elasticsearch.yml
+    
+使用systemd管理elasticsearch服务
+    
+    sudo /bin/systemctl daemon-reload
+    sudo /bin/systemctl enable elasticsearch.service
+    sudo systemctl start elasticsearch.service
+
+开放端口
+    
+    /sbin/iptables -I INPUT -p tcp --dport 9200 -j ACCEPT
+    
+安装kibana
+    
+    vim /etc/yum.repos.d/kibana.repo
+    
+        [kibana-7.x]
+        name=Kibana repository for 7.x packages
+        baseurl=https://artifacts.elastic.co/packages/7.x/yum
+        gpgcheck=1
+        gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        enabled=1
+        autorefresh=1
+        type=rpm-md
+    
+    sudo yum install kibana
+    
+    sudo /bin/systemctl daemon-reload
+    sudo /bin/systemctl enable kibana.service
+    
+    sudo systemctl start kibana.service
+    sudo systemctl stop kibana.service
+    
+安装 logstash
+    
+    同上
+    sudo /bin/systemctl daemon-reload
+    sudo /bin/systemctl enable logstash.service
+    sudo systemctl start logstash.service
