@@ -214,8 +214,25 @@ vim elasticsearch.repo
     sudo systemctl stop kibana.service
     
 安装 logstash
+
+
     
-    同上
+修改配置文件
+    
+新增配置文件
+    
+    cd /etc/logstash/conf.d
+    sudo touch system-log.conf 
+    
+    sudo  ln -s /usr/share/logstash/bin/logstash  /sbin
+    sudo  ln -s /etc/logstash /usr/share/logstash/config
+    sudo logstash -f /usr/share/logstash/config/conf.d/system-log.conf -t
+    
     sudo /bin/systemctl daemon-reload
     sudo /bin/systemctl enable logstash.service
     sudo systemctl start logstash.service
+
+先测试管道
+    
+    cd logstash-7.2.0
+    bin/logstash -e 'input { stdin { } } output { stdout {} }'
