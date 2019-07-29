@@ -15,7 +15,7 @@
     <groupId>com.jezz</groupId>
     <artifactId>jezz-study</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>middle</name>
+    <name>study</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
