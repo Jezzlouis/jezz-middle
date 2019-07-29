@@ -100,6 +100,19 @@
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
     
+    //比较minCapacity和 MAX_ARRAY_SIZE
+    private static int hugeCapacity(int minCapacity) {
+        if (minCapacity < 0) // overflow
+            throw new OutOfMemoryError();
+        return (minCapacity > MAX_ARRAY_SIZE) ?
+            Integer.MAX_VALUE :
+            MAX_ARRAY_SIZE;
+    }
+
+    
+总结:检查元素是否需要扩容，如果是第一次添加元素，当前数组为空，就初始化默认数组为10，每次添加需要的容量=size+1，如果需要的容量大于数组长度就需要扩容，
+扩容的时候 新容量为旧容量的1.5倍，如果新容量比需要的容量还小，以需要的容量为准，如果新容量超过最大容量，就使用最大容量，再以新容量拷贝出来一个新的数组
+    
 #### add(int index, E element)方法
 
      public void add(int index, E element) {
