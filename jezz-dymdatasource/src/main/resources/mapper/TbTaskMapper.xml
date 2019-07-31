@@ -1,0 +1,6 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jezz.dymdatasource.mapper.TbTaskMapper">
+    <select id="selectByTaskId" resultType="com.jezz.dymdatasource.entity.TbTaskDTO" parameterType="com.jezz.dymdatasource.entity.TbUserDTO">
+      select task_id,user_id from tb_task where task_id = #{taskId}
+    </select>
+</mapper>
