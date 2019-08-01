@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Reference(interfaceClass = UserService.class,check = false,retries = 2,group = "dubbo-user",mock = "return null")
+    @Reference(interfaceClass = UserService.class,check = false,retries = 2)
     private UserService userService;
-    @Reference(interfaceClass = CarService.class,check = false,retries = 2,group = "dubbo-user")
+    @Reference(interfaceClass = CarService.class,check = false,retries = 2)
     private CarService carService;
 
     @Override

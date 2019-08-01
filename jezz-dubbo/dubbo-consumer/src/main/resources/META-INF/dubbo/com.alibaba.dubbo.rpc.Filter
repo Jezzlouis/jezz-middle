@@ -1,0 +1,1 @@
+traceFilter=com.jezz.dubbo.consumer.filter.TraceFilter

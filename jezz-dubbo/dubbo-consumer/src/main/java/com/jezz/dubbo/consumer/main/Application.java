@@ -7,7 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.jezz.dubbo.consumer",
+        "com.jezz.dubbo.consumer.main",
+        "com.jezz.dubbo.consumer.controller",
+        "com.jezz.dubbo.consumer.service",
+        "com.jezz.dubbo.consumer.filter",
         "com.jezz.dubbo.service.api"
 })
 @EnableDubboConfiguration

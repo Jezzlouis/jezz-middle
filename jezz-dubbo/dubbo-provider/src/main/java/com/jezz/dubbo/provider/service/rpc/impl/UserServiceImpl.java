@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author jezzlouis
  */
-@Service(interfaceClass = UserService.class,delay = -1)
+@Service(interfaceClass = UserService.class)
 @Component
 public class UserServiceImpl implements UserService {
     @Override
