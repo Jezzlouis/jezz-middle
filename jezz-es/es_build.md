@@ -144,9 +144,9 @@ node03.yml
     
 安装kibana
     
-    docker pull kibana:7.2.0
+    docker pull docker.elastic.co/kibana/kibana:7.2.0
     
-    docker run --link es-node0:elasticsearch -p 5601:5601 --name kibana -d kibana:7.2.0
+    docker run --link es-node0:elasticsearch -p 5601:5601 --name kibana -d docker.elastic.co/kibana/kibana:7.2.0
 
 ## Linux yum 安装
 
