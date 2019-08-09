@@ -1,4 +1,4 @@
-package com.jezz.hashmap;
+package com.jezz.map;
 
 import org.junit.Test;
 import sun.misc.Unsafe;
