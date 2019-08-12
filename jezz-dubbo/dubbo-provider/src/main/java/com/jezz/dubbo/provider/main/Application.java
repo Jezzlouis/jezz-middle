@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
         "com.jezz.dubbo.provider.main",
         "com.jezz.dubbo.provider.service",
-        "com.jezz.dubbo.provider.filter",
         "com.jezz.dubbo.service.api"
 })
 @EnableDubboConfiguration
