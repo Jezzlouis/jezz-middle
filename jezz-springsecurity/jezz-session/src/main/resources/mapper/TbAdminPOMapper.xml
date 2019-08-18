@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jezz.session.mapper.TbAdminPOMapper" >
+  <resultMap id="BaseResultMap" type="com.jezz.session.domain.po.TbAdminPO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="really_name" property="reallyName" jdbcType="VARCHAR" />
+    <result column="zentao_account" property="zentaoAccount" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="zone" property="zone" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="position_id" property="positionId" jdbcType="INTEGER" />
+    <result column="organization_id" property="organizationId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="latest_login_time" property="latestLoginTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, login_name, login_password, really_name, zentao_account, status, phone, company, 
+    area_id, zone, email, qq, uuid, remark, position_id, organization_id, create_date, 
+    update_date, latest_login_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jezz.session.domain.po.TbAdminPOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if time="ratelimit == null" >
+      <if time="limitStart gt 0 and limitEnd gt 0 " >
+        ratelimit ${limitStart} , ${limitEnd}
+      </if>
+      <if time="limitStart lt 1 and limitEnd lt 0 " >
+        ratelimit ${limitEnd}
+      </if>
+    </if>
+    <if time=" ratelimit != null " >
+      ratelimit ${ratelimit.start} , ${ratelimit.size}
+    </if>
+    <if time="page != null" >
+      ratelimit #{page.begin} , #{page.length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jezz.session.domain.po.TbAdminPOExample" >
+    delete from tb_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jezz.session.domain.po.TbAdminPO" keyProperty="id" useGeneratedKeys="true" >
+    insert into tb_admin (id, login_name, login_password, 
+      really_name, zentao_account, status, 
+      phone, company, area_id, 
+      zone, email, qq, uuid, 
+      remark, position_id, organization_id, 
+      create_date, update_date, latest_login_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
+      #{reallyName,jdbcType=VARCHAR}, #{zentaoAccount,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}, 
+      #{zone,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{positionId,jdbcType=INTEGER}, #{organizationId,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{latestLoginTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jezz.session.domain.po.TbAdminPO" keyProperty="id" useGeneratedKeys="true" >
+    insert into tb_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="loginPassword != null" >
+        login_password,
+      </if>
+      <if test="reallyName != null" >
+        really_name,
+      </if>
+      <if test="zentaoAccount != null" >
+        zentao_account,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="zone != null" >
+        zone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="organizationId != null" >
+        organization_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="latestLoginTime != null" >
+        latest_login_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="reallyName != null" >
+        #{reallyName,jdbcType=VARCHAR},
+      </if>
+      <if test="zentaoAccount != null" >
+        #{zentaoAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="zone != null" >
+        #{zone,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestLoginTime != null" >
+        #{latestLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jezz.session.domain.po.TbAdminPOExample" resultType="java.lang.Integer" >
+    select count(*) from tb_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_admin
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginName != null" >
+        login_name = #{record.loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null" >
+        login_password = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reallyName != null" >
+        really_name = #{record.reallyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zentaoAccount != null" >
+        zentao_account = #{record.zentaoAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zone != null" >
+        zone = #{record.zone,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.positionId != null" >
+        position_id = #{record.positionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationId != null" >
+        organization_id = #{record.organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.latestLoginTime != null" >
+        latest_login_time = #{record.latestLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_admin
+    set id = #{record.id,jdbcType=INTEGER},
+      login_name = #{record.loginName,jdbcType=VARCHAR},
+      login_password = #{record.loginPassword,jdbcType=VARCHAR},
+      really_name = #{record.reallyName,jdbcType=VARCHAR},
+      zentao_account = #{record.zentaoAccount,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=INTEGER},
+      zone = #{record.zone,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      uuid = #{record.uuid,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      position_id = #{record.positionId,jdbcType=INTEGER},
+      organization_id = #{record.organizationId,jdbcType=INTEGER},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      latest_login_time = #{record.latestLoginTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jezz.session.domain.po.TbAdminPO" >
+    update tb_admin
+    <set >
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        login_password = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="reallyName != null" >
+        really_name = #{reallyName,jdbcType=VARCHAR},
+      </if>
+      <if test="zentaoAccount != null" >
+        zentao_account = #{zentaoAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="zone != null" >
+        zone = #{zone,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationId != null" >
+        organization_id = #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestLoginTime != null" >
+        latest_login_time = #{latestLoginTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jezz.session.domain.po.TbAdminPO" >
+    update tb_admin
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      login_password = #{loginPassword,jdbcType=VARCHAR},
+      really_name = #{reallyName,jdbcType=VARCHAR},
+      zentao_account = #{zentaoAccount,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=INTEGER},
+      zone = #{zone,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      position_id = #{positionId,jdbcType=INTEGER},
+      organization_id = #{organizationId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      latest_login_time = #{latestLoginTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

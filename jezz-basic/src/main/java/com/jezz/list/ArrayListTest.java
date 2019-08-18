@@ -154,5 +154,4 @@ public class ArrayListTest {
         System.out.println(bigList.size());
         System.out.println("spend time：" + (end - start));
     }
-
 }

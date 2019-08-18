@@ -3,18 +3,18 @@
         "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <properties url="file:/Users/jezzlouis/jezz-middle/mybatis-build/mbg.properties"/>
+    <properties url="file:/Users/jezzlouis/jezz-study/mybatis-build/mbg.properties"/>
     <classPathEntry location="${mbg.jar.path}"/>
     <context id="context1" defaultModelType="flat">
 
         <plugin type="com.jezz.plugin.PaginationPlugin"/>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/seconds_kill?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;nullNamePatternMatchesAll=true"
+                        connectionURL="jdbc:mysql://localhost:3306/spring_security?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;nullNamePatternMatchesAll=true"
                         userId="root"
-                        password="123456"/>
+                        password=""/>
 
-        <javaModelGenerator targetPackage="com.jezz.pojo"
+        <javaModelGenerator targetPackage="com.jezz.session.domain.po"
                             targetProject="${target.project.sdk.base}/src/main/java">
             <property name="mergeable" value="false"/>
         </javaModelGenerator>
@@ -22,14 +22,26 @@
         <sqlMapGenerator targetPackage="mapper"
                          targetProject="${target.project.sdk.base}/src/main/resources"/>
 
-        <javaClientGenerator targetPackage="com.jezz.mapper"
+        <javaClientGenerator targetPackage="com.jezz.session.mapper"
                              targetProject="${target.project.sdk.base}/src/main/java"
                              type="XMLMAPPER"/>
 
-        <table schema="seconds_kill" tableName="tb_order"
-               domainObjectName="TbOrder"></table>
-        <table schema="seconds_kill" tableName="tb_stock"
-               domainObjectName="TbStock"></table>
+        <table schema="spring_security" tableName="tb_admin"
+               domainObjectName="TbAdminPO"></table>
+        <table schema="spring_security" tableName="tb_admin_role"
+               domainObjectName="TbAdminRolePO"></table>
+        <table schema="spring_security" tableName="tb_organization"
+               domainObjectName="TbOrganizationPO"></table>
+        <table schema="spring_security" tableName="tb_permission"
+               domainObjectName="TbPermissionPO"></table>
+        <table schema="spring_security" tableName="tb_resources"
+               domainObjectName="TbResourcesPO"></table>
+        <table schema="spring_security" tableName="tb_role"
+               domainObjectName="TbRolePO"></table>
+        <table schema="spring_security" tableName="tb_role_permission"
+               domainObjectName="TbRolePermissionPO"></table>
+        <table schema="spring_security" tableName="tb_position"
+               domainObjectName="TbPositionPO"></table>
 
     </context>
 </generatorConfiguration>

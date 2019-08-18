@@ -88,4 +88,12 @@ public class MainTest {
             System.out.println(integer);
         }
     }
+
+    @Test
+    public void test6(){
+        String a = "0,50,94,95-140,141,170,190";
+        String[] t = a.split("-");
+        double index1 = Double.parseDouble(t[1]) + 0.50;
+        System.out.println(index1);
+    }
 }
