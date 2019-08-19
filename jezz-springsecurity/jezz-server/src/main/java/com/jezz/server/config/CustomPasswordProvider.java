@@ -10,6 +10,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * 自定义密码保护验证
+ */
 @Slf4j
 public class CustomPasswordProvider extends AbstractUserDetailsAuthenticationProvider {
 

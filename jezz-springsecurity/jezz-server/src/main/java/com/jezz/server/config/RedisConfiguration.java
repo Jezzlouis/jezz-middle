@@ -1,4 +1,4 @@
-package com.jezz.redis.config;
+package com.jezz.server.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisNode;
@@ -17,6 +16,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
@@ -25,11 +25,9 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Configuration
+@Component
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds=14400)
-public class JedisRedisConfig {
-
-
+public class RedisConfiguration {
     @Value("${spring.redis.clusterNodes}")
     private String clusterNodes;
     @Value("${spring.redis.maxActive}")
@@ -48,10 +46,6 @@ public class JedisRedisConfig {
     private String password;
 
 
-    /**
-     * springboot1.x使用的jedis进行连接 Jedis在实现上是直接连接的redis echo，
-     * 如果在多线程环境下是非线程安全的，这个时候只有使用连接池，为每个Jedis实例增加物理连接
-     */
     @Bean
     public RedisConnectionFactory jedisConnectionFactory() {
         String[] hostAndPorts = clusterNodes.split(",");
@@ -68,9 +62,8 @@ public class JedisRedisConfig {
         return factory;
     }
 
-
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate redisTemplate = new RedisTemplate();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
@@ -109,6 +102,7 @@ public class JedisRedisConfig {
         config.setMinIdle(minIdle);
         config.setMaxIdle(maxIdle);
         config.setMaxTotal(maxActive);
-        return new JedisCluster(nodes, commandTimeout, commandTimeout, maxAttempts, password, config);
+        return new JedisCluster(nodes, commandTimeout, commandTimeout, maxAttempts,  password, config);
     }
+
 }
