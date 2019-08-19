@@ -6,11 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -33,15 +37,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable();
 
     }
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
+
     @Bean
-    public CustomUserDetailsService customUserDetailsService(){
-        return new CustomUserDetailsService();
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public CustomPasswordProvider customPasswordProvider(){
+        return new CustomPasswordProvider();
     }
 
+    @Override
+    protected UserDetailsService userDetailsService() {
+        return customUserDetailsService;
+    }
 
 
 }
