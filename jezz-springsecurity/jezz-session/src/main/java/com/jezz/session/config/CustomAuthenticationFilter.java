@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-@Component
 public class CustomAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     public CustomAuthenticationFilter() {

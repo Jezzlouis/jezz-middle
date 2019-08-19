@@ -2,13 +2,9 @@ package com.jezz.session;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@Configuration
-@ComponentScan(basePackages = {
-        "com.jezz.session"
-})
+@SpringBootApplication
 @EnableAutoConfiguration
 public class SessionApplication {
 

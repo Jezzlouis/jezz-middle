@@ -60,6 +60,6 @@ public class CustomSecurityInterceptor extends AbstractSecurityInterceptor imple
 
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return securityMetadataSource;
+        return this.securityMetadataSource;
     }
 }
