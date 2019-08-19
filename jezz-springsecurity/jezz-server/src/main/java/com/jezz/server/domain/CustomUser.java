@@ -7,11 +7,11 @@ import java.util.Collection;
 
 public class CustomUser implements UserDetails {
 
-    private String username;
+    private String account;
     private String password;
 
-    public CustomUser(String username, String password) {
-        this.username = username;
+    public CustomUser(String account, String password) {
+        this.account = account;
         this.password = password;
     }
 
@@ -27,7 +27,7 @@ public class CustomUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return account;
     }
 
     @Override
