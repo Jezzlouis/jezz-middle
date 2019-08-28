@@ -11,13 +11,41 @@ dubbo根据SPI和@Adaptive注解值生成"获取扩展名逻辑"，同时也受i
 
 3.服务导出
 Dubbo 服务导出过程始于 Spring 容器发布刷新事件，Dubbo 在接收到事件后，会立即执行服务导出逻辑。
+
 第一部分是前置工作，主要用于检查参数，组装URL
 (检测并处理泛化服务和普通服务类 检测 <dubbo:service> 标签的 interface 属性合法性，不合法则抛出异常，检测本地存根配置
 对providerConfig applicationConfig核心配置类对象进行检测，为空就从其他配置类获取响应的实例，再检测applicationConfig和RegisterConfig，为空则尝试创建，若无法创建抛异常)
+将版本时间戳各种配置字段放到map里面，将map和主机名这些数据传给URL构造方法创建URL对象。
+
 第二部分是导出服务，包含导出服务到本地jvm，导出服务到远程
-（ 首先是 export 配置，这个配置决定了是否导出服务。有时候我们只是想本地启动服务进行一些调试工作，我们并不希望把本地启动的服务暴露出去给别人调用。
- 此时，我们可通过配置 export 禁止服务导出  <dubbo:provider export="false" /> ）
+
+（1.导出之前要先通过ProxyFactory创建invoker对象，dubbo默认是调用javassistProxyFactory，在里面创建一个abtrastProxyInvoke匿名类对象调用doinvoke方法
+将请求转发给wrapper类的invokeMethod方法，wrapper类是抽象类只能通过子类getWrapper方法创建子类，子类代码生成逻辑会对class对象进行解析拿到类信息方法等，
+生成完毕后javassist生成class对象，最后再通过反射生成wrapper实例）
+
+根据url里面的scope参数来决定服务导出方式,scope=none,不导出服务,scope!=remote导出到本地,scope!=local导出到远程
+exportLocal 方法比较简单，首先根据 URL 协议头决定是否导出服务。若需导出，则创建一个新的 URL 并将协议头、主机名以及端口设置成新的值。
+然后创建 Invoker（1），并调用 InjvmProtocol 的 export 方法导出服务。
+
+调用 doLocalExport 导出服务调用dubboProtocol的export方法，在这个方法里调用openserver启动服务器(netty)
+ 
 第三部分是向注册中心注册服务，用于服务发现
+(向注册中心注册服务的本质将配置信息注册到节点下面)
 
-4.
+4.服务引用 （引用本地jvm服务，直连方式引用服务，通过注册中心引用远程服务）
+dubbo默认是懒汉式引用服务(在referenceBean对应的服务注入到其他类的时候引用) 服务引用的入口方法为 ReferenceBean 的 getObject 方法
+1.检查配置，获取与接口名对应的配置。将版本时间戳各种配置字段放到map里面。根据配置信息判断是否本地调用，本地就调用injvmprotocol的refer方法生成invoke实例
+非本地通过protocol自适应扩展远程调用生成invoke实例，dubbo默认是调用dubboprotocal里面的refer方法，开启netty客户端
+registerProtocol里面的refer方法创建一个 RegistryDirectory 实例，然后生成服务者消费者链接，并向注册中心进行注册。
+注册完毕后，紧接着订阅 providers、configurators、routers 等节点下的数据，providers节点可能产生多个节点，这个时候Cluster就将多个节点合并成为一个，并生成一个invoker
+然后通过ProxyFactory创建代理对象
 
+5.directory
+RegistryDirectory 实现了 NotifyListener 接口，当注册中心节点信息发生变化后，RegistryDirectory 可以通过此接口方法得到变更信息，
+并根据变更信息动态调整内部 Invoker 列表
+
+6.路由
+ConditionRouter 构造方法先是对路由规则做预处理，然后调用 parseRule 方法分别对服务提供者和消费者规则进行解析，
+最后将解析结果赋值给 whenCondition 和 thenCondition 成员变量。
+服务路由的入口方法是ConditionRouter的router方法 ，router 方法先是调用 matchWhen 对服务消费者进行匹配，如果匹配失败，直接返回 Invoker 列表。
+如果匹配成功，再对服务提供者进行匹配，匹配逻辑封装在了 matchThen 方法中
