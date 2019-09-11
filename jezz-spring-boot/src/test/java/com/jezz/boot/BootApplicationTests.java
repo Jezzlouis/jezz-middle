@@ -1,4 +1,4 @@
-package com.jezz.muldatasource;
+package com.jezz.boot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MuldatasourceApplicationTests {
+public class BootApplicationTests {
 
     @Test
     public void contextLoads() {

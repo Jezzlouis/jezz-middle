@@ -1,20 +1,18 @@
 package com.jezz.zeroio;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import org.junit.Test;
+
+import java.io.*;
 import java.nio.MappedByteBuffer;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.util.Scanner;
 
-public
-class
+public class MappedByteBufferTest {
 
-MappedByteBufferTest {
-
-
-    public static void main(String[] args) throws Exception {
-        File file = new File("/Users/jezzlouis/Document/db.txt");
+    @Test
+    public void MBBTest() throws IOException {
+        File file = new File("/Users/jezzlouis/Documents/db.txt");
 
         long len = file.length();
 
@@ -33,4 +31,20 @@ MappedByteBufferTest {
             System.out.print(scan.next() + " ");
         }
     }
+
+    @Test
+    public void ChannelTransferTest() throws IOException {
+        String files[] = new String[1];
+        files[0] = "/Users/jezzlouis/Documents/db.txt";
+        for (int i = 0; i < files.length; i++) {
+            FileInputStream fileInputStream = new FileInputStream(files[i]);
+            FileChannel fileChannel = fileInputStream.getChannel();
+            fileChannel.transferTo(0,fileChannel.size(), Channels.newChannel(System.out));
+            fileChannel.close();
+            fileInputStream.close();
+        }
+    }
+
+
+
 }
