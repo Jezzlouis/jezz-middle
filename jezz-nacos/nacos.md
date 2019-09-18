@@ -93,18 +93,18 @@ BASE是指基本可用（Basically Available）、软状态（ Soft State）、�
     eg: p1->a1=v1 p2->a2=v2 p3(协调者)->a3(参与者)=v3(提案)
     其次是p1提出了提案v1被a1，a2批准了，p2提出了提案v2被a3，a4，a5批准了，但是a5挂了，这样就会导致每个提案被差不多Acceptor批准了还是无法选定提案
 推导出:在p1的基础上，再加上一个提案被选定需要由半数以上的Acceptor批准的需求暗示着一个Acceptor必须能够批准不止一个提案
-    可以用全局编号 \[M<sub>n,V<sub>n] 
+    可以用全局编号 \[ M<sub>n , V<sub>n ] 
     标识提案进行区分,虽然允许多个提案被选定,但是要求保证被选定的提案都有相同的value值
 约定:
-    P2:编号为 M<sub>0 、Value值为 V<sub>0 的提案(即 \[M<sub>0,V<sub>0] )被选定了,那么所有比编号 M<sub>0 更高的,且被选定的提案，其value值也必须是 V<sub>0 ;
+    P2:编号为 M<sub>0 、Value值为 V<sub>0 的提案(即 \[M<sub>0 , V<sub>0] )被选定了,那么所有比编号 M<sub>0 更高的,且被选定的提案，其value值也必须是 V<sub>0 ;
 一个提案被选定首先至少要有一个Acceptor批准所以推导出:
-    P2a:编号为 M<sub>0 、Value值为 V<sub>0 的提案(即 \[M<sub>0,V<sub>0] )被选定了,那么所有比编号 M<sub>0 更高的,且被Acceptor批准的提案，其value值也必须是 V<sub>0 ;
-假如p1提出了提案 \[M<sub>1,V<sub>2] 还没有被批准过,p2提出了提案 \[M<sub>0,V<sub>1] 被a2,a3,a4,a5批准了，超过半数被批准则被选定,此时产生了一个编号更高的提案 [M<sub>1,V<sub>2]
+    P2a:编号为 M<sub>0 、Value值为 V<sub>0 的提案(即 \[M<sub>0 , V<sub>0] )被选定了,那么所有比编号 M<sub>0 更高的,且被Acceptor批准的提案，其value值也必须是 V<sub>0 ;
+假如p1提出了提案 \[ M<sub>1 , V<sub>2 ] 还没有被批准过,p2提出了提案 \[ M<sub>0 , V<sub>1 ] 被a2,a3,a4,a5批准了，超过半数被批准则被选定,此时产生了一个编号更高的提案 [M<sub>1,V<sub>2]
 与P2a矛盾，因为值不相同。
 推导:需要对p2a加强
-    P2b:如果一个提案 \[M<sub>0,V<sub>0] 被选定后,之后Proposer产生的编号更高的提案,其value值都为 V<sub>0 ;
+    P2b:如果一个提案 \[ M<sub>0 , V<sub>0 ] 被选定后,之后Proposer产生的编号更高的提案,其value值都为 V<sub>0 ;
 推导:
-    P2c:对于任意 M<sub>n 和 V<sub>n ,如果提案 \[M<sub>n,V<sub>n] 被提出,那么肯定存在一个由半数以上Acceptor组成的集合S，满足下列条件的任何一个:
+    P2c:对于任意 M<sub>n 和 V<sub>n ,如果提案 \[ M<sub>n , V<sub>n ] 被提出,那么肯定存在一个由半数以上Acceptor组成的集合S，满足下列条件的任何一个:
     1.S中不存在任何批准过编号小于 M<sub>n 的提案的Acceptor
     2.选取S中所有Acceptor批准的编号小于 M<sub>n 的提案，其中编号最大的那个提案其Value值是 V<sub>n ;
 
