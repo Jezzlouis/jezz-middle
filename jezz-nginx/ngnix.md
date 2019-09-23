@@ -20,3 +20,6 @@ work进程的作用:处理请求(看懂这里需要先了解 socket通信原理)
 网络事件 异步非阻塞
 信号
 定时器
+
+### worker_connections
+request
