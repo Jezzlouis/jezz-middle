@@ -96,4 +96,10 @@ public class MainTest {
         double index1 = Double.parseDouble(t[1]) + 0.50;
         System.out.println(index1);
     }
+
+    @Test
+    public void test7(){
+        String a = "abcde";
+        System.out.println(a.substring(1,3));
+    }
 }
