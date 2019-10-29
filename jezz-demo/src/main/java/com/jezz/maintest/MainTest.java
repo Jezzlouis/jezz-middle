@@ -101,5 +101,41 @@ public class MainTest {
     public void test7(){
         String a = "abcde";
         System.out.println(a.substring(1,3));
+        String tipsJson = "{}";
+        if("{}".equals(tipsJson)){
+            System.out.println(true);
+        }
+        String b = "/mnt/input/d2/upload/10002495/842679/842679_3_tips.json";
+        System.out.println(b.lastIndexOf("/upload"));
+        System.out.println(b.substring(b.lastIndexOf("/upload")+7));
+        List<String> list = new ArrayList<>();
+        list.remove("RAM-128");
+
+        long s = System.currentTimeMillis();
+        List<User> list1 = new LinkedList<>();
+        for (int i = 0; i < 20000; i++) {
+            User user = new User();
+            list1.add(user);
+        }
+        System.out.println(System.currentTimeMillis() - s);
     }
+
+    @Test
+    public void test8(){
+        int[] a = new int[10];
+        a[0] = 0;
+        a[1] = 1;
+        a[2] = 2;
+        a[3] = 3;
+        a[4] = 1;
+        System.arraycopy(a, 2, a, 3, 2);
+        //a[2]=99;
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
+        }
+    }
+}
+
+class User{
+
 }

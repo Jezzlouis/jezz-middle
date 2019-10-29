@@ -2,6 +2,7 @@ package com.jezz.leetcode.stack;
 
 import org.junit.Test;
 
+import java.util.Map;
 import java.util.Stack;
 
 public class StackTest {
@@ -92,6 +93,7 @@ public class StackTest {
 
     @Test
     public void test682(){
+       System.out.println( String.valueOf(""));
 
     }
 }
