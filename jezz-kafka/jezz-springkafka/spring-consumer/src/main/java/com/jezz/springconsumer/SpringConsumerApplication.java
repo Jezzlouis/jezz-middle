@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.jezz.springconsumer"
+        "com.jezz.springconsumer.config"
 })
 public class SpringConsumerApplication {
 

@@ -1,4 +1,4 @@
-package com.jezz.producer.send;
+package com.jezz.producer.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

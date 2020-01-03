@@ -2,8 +2,17 @@ package com.jezz.list;
 
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.util.concurrent.atomic.AtomicStampedReference;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 import static java.util.stream.Collectors.toList;
 
@@ -75,5 +84,16 @@ public class ArrayListTest {
         System.out.println("---原来的List2---");
         list2.parallelStream().forEachOrdered(System.out :: println);
 
+
+    }
+
+    @Test
+    public void test4(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -20);
+        System.out.println(calendar.getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String pictureCapturedTime = sdf.format(calendar.getTime());
+        System.out.println(pictureCapturedTime);
     }
 }

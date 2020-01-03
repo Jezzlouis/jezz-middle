@@ -18,4 +18,9 @@ public class ClassLoaderTest {
         System.out.println(ClassLoader.getSystemClassLoader().getParent().getParent());
         System.out.println(System.getProperty("java.class.path"));
     }
+
+    @Test
+    public void  test3(){
+
+    }
 }

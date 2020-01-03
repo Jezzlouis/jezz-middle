@@ -154,4 +154,21 @@ public class ArrayListTest {
         System.out.println(bigList.size());
         System.out.println("spend time：" + (end - start));
     }
+
+    @Test
+    public void test5(){
+        String[] str = new String[]{"flower","flow","flight"};
+        System.out.println(longestCommonPrefix(str));
+    }
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length < 0) return "";
+        String prefix = strs[0];
+        for(int i = 1;i < strs.length ;i++){
+            while(strs[i].indexOf(prefix) != 0){
+                prefix = prefix.substring(0,prefix.length()-1);
+                if(prefix.isEmpty()) return "";
+            }
+        }
+        return prefix;
+    }
 }

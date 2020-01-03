@@ -1,4 +1,4 @@
-package com.jezz.producer.config;
+package com.jezz.producer.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
