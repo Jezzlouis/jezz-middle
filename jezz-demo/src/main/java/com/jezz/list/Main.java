@@ -25,7 +25,7 @@ public class Main {
 //        producer3.stop();
 //        Thread.sleep(3000);
 //        service.shutdown();
-        Map<String,Object> map = new ConcurrentHashMap<>();
+        System.out.println(Math.toIntExact((3280000000L + 6000000 - 1) / 6000000));
     }
 
 
